@@ -78,7 +78,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={screenOptionStyle}
-      initialRouteName="BottomTabNavigator"
+      initialRouteName="Login"
     >
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
       <Stack.Screen

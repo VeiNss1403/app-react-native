@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+
 import {
   View,
   Text,
@@ -8,8 +9,36 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { loginUser } from "../service/auth-service";
 
 const Login = ({ navigation }) => {
+
+  const [error, setError] = React.useState('');
+  const [maSo, setMaSo] = React.useState('');
+  const [matKhau, setMatKhau] = React.useState('');
+  const handleLogin = async () => {
+    try {
+      if (!maSo || !matKhau) {
+        setError("Vui lòng nhập đầy đủ thông tin.");
+        return;
+      }
+
+      const params = {
+        maSo: maSo,
+        matKhau: matKhau,
+      };
+      const jwt = await loginUser(params);
+      console.log(jwt);
+
+      if (jwt.accessToken) {
+        navigation.navigate("BottomTabNavigator");
+      } else {
+        setError("Thất bại");
+      }
+    } catch (error) {
+      setError("Đã xảy ra lỗi");
+    }
+  };
   return (
     <View style={styles.background}>
       <StatusBar style="light" />
@@ -40,6 +69,8 @@ const Login = ({ navigation }) => {
               style={styles.input}
               placeholder="Mã số sinh viên"
               placeholderTextColor={"white"}
+              value={maSo}
+              onChangeText={(text) => setMaSo(text)}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -48,12 +79,15 @@ const Login = ({ navigation }) => {
               placeholder="Mật khẩu"
               placeholderTextColor={"white"}
               secureTextEntry
+              value={matKhau}
+              onChangeText={(text) => setMatKhau(text)}
             />
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Đăng Nhập</Text>
+            {error && <Text>{error}</Text>}
+            <TouchableOpacity style={styles.button} onPress={() => handleLogin()}>
+              <Text style={styles.buttonText}> Đăng Nhập</Text>
             </TouchableOpacity>
           </View>
 
