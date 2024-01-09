@@ -8,7 +8,6 @@ import Chat from "../screens/Chat";
 import Login from "../screens/Login";
 import Calendar from "../screens/Calendar";
 import Icon from "@expo/vector-icons/Ionicons";
-import { TouchableOpacity } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {

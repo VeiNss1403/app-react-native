@@ -32,8 +32,6 @@ const Login = ({ navigation }) => {
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>Đăng Nhập</Text>
         </View>
-
-        {/* form */}
         <View style={styles.form}>
           <View style={styles.inputContainer}>
             <TextInput

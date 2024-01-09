@@ -2,7 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const Cart = ({ text, data, user}) => {
+const Cart = ({ text, data, user }) => {
+  console.log("🚀 ~ file: Cart.js:6 ~ Cart ~ data:", data);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigation = useNavigation();
   return (
@@ -13,7 +14,7 @@ const Cart = ({ text, data, user}) => {
         </View>
         <View style={styles.userInfo}>
           <Text style={styles.username} numberOfLines={1} ellipsizeMode="tail">
-            {user.userName}
+            {data.tenTaiKhoan}
           </Text>
         </View>
       </View>
@@ -22,16 +23,25 @@ const Cart = ({ text, data, user}) => {
           style={styles.postText}
           numberOfLines={isExpanded ? undefined : 5}
         >
-          {text}
+          {data.moTa}
         </Text>
-        <TouchableOpacity
-          style={styles.readMoreButton}
-          onPress={() => setIsExpanded(!isExpanded)}
-        >
-          <Text style={styles.readMoreButtonText}>Xem thêm</Text>
-        </TouchableOpacity>
+        {data.moTa !== "" ? (
+          <TouchableOpacity
+            style={styles.readMoreButton}
+            onPress={() => setIsExpanded(!isExpanded)}
+          >
+            <Text style={styles.readMoreButtonText}>Xem thêm</Text>
+          </TouchableOpacity>
+        ) : (
+          ""
+        )}
         <View style={styles.postImageContainer}>
-          <Image style={styles.postImage} source={{ uri: data.img }} />
+          <Image
+            style={styles.postImage}
+            source={{
+              uri: data.hinh,
+            }}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity

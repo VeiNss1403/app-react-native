@@ -9,22 +9,71 @@ import {
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 
-const Detail = ({ route, navigation }) => {
+const Detail = ({ route }) => {
   const item = route.params.item;
+  console.log("🚀 ~ file: Detail.js:14 ~ Detail ~ item:", item);
   const user = route.params.user;
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.itemContainer}>
-        <View style={styles.imageContainer}>
-          <Image src={item.img} style={styles.image} />
-        </View>
+        <Image src={item.hinh} style={styles.image} />
         <View style={styles.detailsContainer}>
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>$ {item.price}</Text>
+          <Text style={styles.itemName}>{item.tenHoatDong}</Text>
+          <View style={styles.separator} />
+          <View style={styles.itemText}>
+            <Icon name="person" size={18} style={{ paddingRight: 5 }} />
+            <Text style={styles.text}>Người tổ chức: {item.tenTaiKhoan}</Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon name="map-sharp" size={18} style={{ paddingRight: 5 }} />
+            <Text style={styles.text}>Địa chỉ: {item.diaChi}</Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon name="calendar-sharp" size={18} style={{ paddingRight: 5 }} />
+            <Text style={styles.text}>
+              Thời gian bắt đầu: {item.thoiGianBatDau}
+            </Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon name="calendar-sharp" size={18} style={{ paddingRight: 5 }} />
+            <Text style={styles.text}>
+              Thời gian kết thúc: {item.thoiGianKetThuc}
+            </Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon
+              name="calculator-sharp"
+              size={18}
+              style={{ paddingRight: 5 }}
+            />
+            <Text style={styles.text}>Số lượng : {item.soLuongSinhVien}</Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon
+              name="calculator-sharp"
+              size={18}
+              style={{ paddingRight: 5 }}
+            />
+            <Text style={styles.text}>
+              Số lượng đã đăng ký: {item.soLuongDangKy}
+            </Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon name="document" size={18} style={{ paddingRight: 5 }} />
+            <Text style={styles.text}>Yêu Cầu: {item.yeuCau}</Text>
+          </View>
+          <View style={styles.itemText}>
+            <Icon name="contract-sharp" size={18} style={{ paddingRight: 5 }} />
+            <Text style={styles.text}>Trạng thái: {item.trangThai}</Text>
+          </View>
+        </View>
+        <View style={styles.btnDangKyContainer}>
+          <TouchableOpacity>
+            <Text style={styles.btnDangKy}>Đăng ký</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.paymentButtonContainer}></View>
     </SafeAreaView>
   );
 };
@@ -32,86 +81,63 @@ const Detail = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    marginHorizontal: 5,
-  },
-  backButton: {
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 20,
-    padding: 10,
   },
   itemContainer: {
-    width: 270,
-    borderRadius: 40,
+    backgroundColor: "#fff",
+    borderRadius: 10,
     marginHorizontal: 5,
   },
-  actionButton: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  actionButtonIcon: {
-    backgroundColor: "rgba(255,255,255,0.3)",
-    padding: 10,
-    borderRadius: 25,
-    marginRight: 4,
-    marginTop: 4,
-  },
-  imageContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    shadowRadius: 40,
-    shadowOffset: { width: 0, height: 50 },
-    shadowOpacity: 0.6,
-  },
+  imageContainer: {},
   image: {
-    width: 210,
-    height: 210,
+    width: 350,
+    height: 250,
+    alignSelf: "center",
+    resizeMode: "stretch",
+    borderRadius: 10,
   },
   detailsContainer: {
-    marginLeft: 4,
-    marginTop: 4,
+    marginHorizontal: 10,
+    justifyContent: "space-around",
   },
   itemName: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white",
-    textShadowColor: "black",
+    color: "black",
+    textShadowColor: "white",
     textShadowRadius: 2,
   },
   itemPrice: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: "white",
     textShadowColor: "black",
     textShadowRadius: 2,
     marginTop: 2,
   },
-  paymentButtonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 7,
+  separator: {
+    height: 1,
+    backgroundColor: "#ddd",
+    marginVertical: 8,
   },
-  paymentButton: {
-    flex: 1,
-    backgroundColor: "orange",
-    opacity: 0.8,
-    shadowColor: "orange",
-    shadowRadius: 25,
-    shadowOffset: { width: 0, height: 15 },
-    shadowOpacity: 0.4,
-    padding: 10,
-    borderRadius: 20,
+  btnDangKyContainer: {
+    backgroundColor: "#A1EEBD",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    borderRadius: 8,
+    marginTop: 20,
   },
-  paymentButtonText: {
+  btnDangKy: {
     fontSize: 18,
-    textAlign: "center",
-    color: "white",
-    fontWeight: "bold",
+    color: "#fff",
+  },
+  itemText: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginHorizontal: 10,
+  },
+  text: {
+    fontSize: 18,
   },
 });
 
