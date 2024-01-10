@@ -11,7 +11,6 @@ import Icon from "@expo/vector-icons/Ionicons";
 
 const Detail = ({ route }) => {
   const item = route.params.item;
-  console.log("🚀 ~ file: Detail.js:14 ~ Detail ~ item:", item);
   const user = route.params.user;
 
   return (
