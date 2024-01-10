@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const Cart = ({ text, data, user }) => {
-  console.log("🚀 ~ file: Cart.js:6 ~ Cart ~ data:", data);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigation = useNavigation();
   return (
