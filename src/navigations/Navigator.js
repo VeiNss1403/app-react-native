@@ -10,7 +10,9 @@ import Calendar from "../screens/Calendar";
 import Icon from "@expo/vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({route}) => {
+  const item = route.params;
+  console.log(item)
   return (
     <Tab.Navigator
       screenOptions={{
@@ -28,7 +30,9 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="Danh sách sự kiện"
         component={Home}
+        initialParams={{ jwt: item }}
         options={{
+
           tabBarIcon: ({ color, size }) => (
             <Icon name="ios-home" color={color} size={32} />
           ),
@@ -77,7 +81,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={screenOptionStyle}
-      initialRouteName="BottomTabNavigator"
+      initialRouteName="Login"
     >
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
       <Stack.Screen

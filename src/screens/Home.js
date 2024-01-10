@@ -211,7 +211,10 @@ const data = [
     moTa: "",
   },
 ];
-const Home = ({ navigation }) => {
+const Home = ({route, navigation }) => {
+  // const item = route.params.jwt;
+  const jwt = route.params.jwt;
+   console.log('hone',jwt)
   return (
     <ScrollView style={styles.container}>
       {data.map((item) => (
