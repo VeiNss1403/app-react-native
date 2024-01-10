@@ -99,9 +99,12 @@ const products = [
     img: "https://www.example.com/asus-rog-phone-5.jpg",
   },
 ];
-const Home = ({ navigation }) => {
+const Home = ({route, navigation }) => {
+  // const item = route.params.jwt;
+  const jwt = route.params.jwt;
+   console.log('hone',jwt)
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container}                                                                  >
       {products.map((item) => (
         <Cart
           key={item.id}

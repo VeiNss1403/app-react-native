@@ -27,14 +27,19 @@ const Login = ({ navigation }) => {
         maSo: maSo,
         matKhau: matKhau,
       };
-      const jwt = await loginUser(params);
-      console.log(jwt);
-
-      if (jwt.accessToken) {
-        navigation.navigate("BottomTabNavigator");
-      } else {
+   //   var jwt =''
+      await loginUser(params).then((res)=>{
+        
+        navigation.navigate("BottomTabNavigator",{jwt:res});
+      }).catch(()=>{
         setError("Thất bại");
-      }
+      });
+
+      // if (jwt.accessToken) {
+      //   navigation.navigate("BottomTabNavigator",{jwt:jwt});
+      // } else {
+      //   setError("Thất bại");
+      // }
     } catch (error) {
       setError("Đã xảy ra lỗi");
     }
@@ -91,12 +96,12 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.linkContainer}>
+          {/* <View style={styles.linkContainer}>
             <Text>Chưa có tài khoản? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Detail")}>
               <Text style={styles.linkText}>Đăng ký</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
     </View>
