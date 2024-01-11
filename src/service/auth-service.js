@@ -19,3 +19,13 @@ export const getUserInfo = async (jwt) => {
 
     return res.data
 }
+
+export const putUser = async (maSo,jwt,data) => {
+    const res = await axiosJWT.put(`${REACT_APP_API_URL}/update/${maSo}`,data, {
+        headers: {
+            Authorization: `Bearer ${jwt}`,
+        },
+    },)
+
+    return res.data
+}

@@ -20,8 +20,10 @@
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.72.6",
+    "react-native-localize": "^3.0.5",
     "react-native-paper": "^5.11.7",
     "react-native-render-html": "^6.3.4",
+    "react-native-status-bar-height": "^2.6.0",
     "react-native-web": "^0.19.10"
   },
   "devDependencies": {

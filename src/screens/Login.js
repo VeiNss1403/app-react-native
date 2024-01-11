@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   input: {
-    color: "gray",
+    color: "white",
     height: 40,
     padding: 5,
   },

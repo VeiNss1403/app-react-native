@@ -1,213 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import CartCalendar from "../components/CartCalendar";
-const Calendar = () => {
-  const user = {
-    userName: "Hutech - Khoa Công Nghệ Thông Tin",
-    hinh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9fuv3_FEi9_7_Ukr9SaQK1nvJhnzNbpazQg&usqp=CAU",
+import { getHoatDongDangKy } from '../service/hoat-dong-service';
+const Calendar = ({ route }) => {
+
+  const [data, setData] = useState([]);
+  const jwt = route.params.jwt.accessToken;
+ // var randomNumber = route.params.load
+ const min = 1
+ const max = 9
+ var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log("🚀 ~ Profile ~ route:", randomNumber);
+  const fetchData = async () => {
+    try {
+      console.log("🚀 ~ Profile ~ route:jjjjjjjjjjjj");
+      const res = await getHoatDongDangKy(jwt);
+
+      randomNumber = 1
+      setData(res);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const data = [
-    {
-      maHoatDong: "HD1",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "hd1",
-      thoiGianBatDau: null,
-      thoiGianKetThuc: null,
-      diaChi: null,
-      soLuongSinhVien: null,
-      soLuongDangKy: 1,
-      yeuCau: "",
-      hinh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9fuv3_FEi9_7_Ukr9SaQK1nvJhnzNbpazQg&usqp=CAU",
-      trangThai: "Chưa mở",
-      moTa: "",
-    },
-    {
-      maHoatDong: "HD2",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "hd2",
-      thoiGianBatDau: "22:17 17-11-2023",
-      thoiGianKetThuc: null,
-      diaChi: null,
-      soLuongSinhVien: 40,
-      soLuongDangKy: 1,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Đã hoàn thành",
-      moTa: "",
-    },
-    {
-      maHoatDong: "KTVDBCLPM",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "HỘI THẢO: “KIỂM THỬ VÀ ĐẢM BẢO CHẤT LƯỢNG PHẦN MỀM”",
-      thoiGianBatDau: "08:39 17-11-2023",
-      thoiGianKetThuc: "08:56 17-11-2023",
-      diaChi: "Phòng E3 - 05.01, Thu Duc Campus.",
-      soLuongSinhVien: 100,
-      soLuongDangKy: 0,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Đã hoàn thành",
-      moTa: "",
-    },
-    {
-      maHoatDong: "KTVDBCLPM1",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "HỘI THẢO: “KIỂM THỬ VÀ ĐẢM BẢO CHẤT LƯỢNG PHẦN MỀM”",
-      thoiGianBatDau: "08:39 17-11-2023",
-      thoiGianKetThuc: "08:56 17-01-2023",
-      diaChi: "Phòng E3 - 05.01, Thu Duc Campus.",
-      soLuongSinhVien: 10,
-      soLuongDangKy: 1,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Đã hoàn thành",
-      moTa: "",
-    },
-    {
-      maHoatDong: "KTVDBCLPM2",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "HỘI THẢO: “KIỂM THỬ VÀ ĐẢM BẢO CHẤT LƯỢNG PHẦN MỀM”",
-      thoiGianBatDau: "08:39 17-11-2023",
-      thoiGianKetThuc: "08:56 17-11-2023",
-      diaChi: "Phòng E3 - 05.01, Thu Duc Campus.",
-      soLuongSinhVien: 1000,
-      soLuongDangKy: 0,
-      yeuCau: "<p>&igrave;nksef</p>",
-      hinh: null,
-      trangThai: "Chưa mở",
-      moTa: "<p>dọicoiwwe</p>",
-    },
-    {
-      maHoatDong: "KTVDBCLPM4",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "HỘI THẢO: “KIỂM THỬ VÀ ĐẢM BẢO CHẤT LƯỢNG PHẦN MỀM”",
-      thoiGianBatDau: "08:39 17-11-2023",
-      thoiGianKetThuc: "08:56 17-11-2023",
-      diaChi: "Phòng E3 - 05.01, Thu Duc Campus.",
-      soLuongSinhVien: 1000,
-      soLuongDangKy: 0,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Chưa triển khai",
-      moTa: "",
-    },
-    {
-      maHoatDong: "NEWKTVDBCLPM4",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: "HỘI THẢO: “NEW KIỂM THỬ VÀ ĐẢM BẢO CHẤT LƯỢNG PHẦN MỀM”",
-      thoiGianBatDau: "12:30 21-11-2023",
-      thoiGianKetThuc: "16:30 21-11-2023",
-      diaChi: "E1-02.12, Thu Duc campus",
-      soLuongSinhVien: 999,
-      soLuongDangKy: 0,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Chưa mở",
-      moTa: "",
-    },
-    {
-      maHoatDong: "NEWQTPTVQLPM29112023",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong:
-        ' HỘI THẢO: "NEW QUY TRÌNH PHÁT TRIỂN & QUẢN LÝ DỰ ÁN PHẦN MỀM” ',
-      thoiGianBatDau: "12:30 21-11-2023",
-      thoiGianKetThuc: "16:30 21-11-2023",
-      diaChi: "E1-02.12, Thu Duc campus",
-      soLuongSinhVien: 1000,
-      soLuongDangKy: 0,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Chưa mở",
-      moTa: "",
-    },
-    {
-      maHoatDong: "QTPTVQLPM29112023",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong:
-        ' HỘI THẢO: "QUY TRÌNH PHÁT TRIỂN & QUẢN LÝ DỰ ÁN PHẦN MỀM” ',
-      thoiGianBatDau: "13:30 24-11-2023",
-      thoiGianKetThuc: "16:30 24-11-2023",
-      diaChi: "E1-02.12, Thu Duc campus",
-      soLuongSinhVien: 1000,
-      soLuongDangKy: 2,
-      yeuCau: "",
-      hinh: null,
-      trangThai: "Chưa mở",
-      moTa: '<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">\n<div dir="auto">Bạn đang chuẩn bị bước ch&acirc;n v&agrave;o thế giới phần mềm v&agrave; muốn hiểu r&otilde; hơn về quy tr&igrave;nh ph&aacute;t triển cũng như quản l&yacute; dự &aacute;n trong lĩnh vực n&agrave;y? H&atilde;y tham gia Hội thảo "Quy tr&igrave;nh ph&aacute;t triển &amp; Quản l&yacute; dự &aacute;n phần mềm" do khoa C&ocirc;ng nghệ Th&ocirc;ng tin phối hợp c&ugrave;ng với TMA Techgroup tổ chức để đồng h&agrave;nh c&ugrave;ng những chuy&ecirc;n gia h&agrave;ng đầu v&agrave; kh&aacute;m ph&aacute; b&iacute; quyết th&agrave;nh c&ocirc;ng trong ng&agrave;nh c&ocirc;ng nghệ phần mềm.</div>\n</div>\n<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">\n<div dir="auto">Phần mềm l&agrave; hạt nh&acirc;n của sự đổi mới trong mọi ng&agrave;nh, v&agrave; quy tr&igrave;nh ph&aacute;t triển cũng như quản l&yacute; dự &aacute;n đ&oacute;ng vai tr&ograve; quan trọng trong việc đảm bảo th&agrave;nh c&ocirc;ng của mỗi dự &aacute;n. Tại hội thảo, bạn sẽ được kh&aacute;m ph&aacute;:</div>\n</div>\n<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">&nbsp;</div>\n<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">&nbsp;</div>',
-    },
-    {
-      maHoatDong: "TESTINGQA112023",
-      tenLoaiHoatDong: "Hội thảo",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: 'HỘI THẢO: "TESTING & QA - VAI TRÒ, CƠ HỘI NGHỀ NGHIỆP"',
-      thoiGianBatDau: "12:30 21-11-2023",
-      thoiGianKetThuc: "16:30 21-11-2023",
-      diaChi: "E1 - 02.12, Thu Duc Campus",
-      soLuongSinhVien: 50,
-      soLuongDangKy: 4,
-      yeuCau:
-        "<p>C&aacute;c bạn sinh vi&ecirc;n khi tham gia đều mặt đồng phục Hutech</p>",
-      hinh: "https://scontent.fsgn15-1.fna.fbcdn.net/v/t39.30808-6/410683296_661394679515741_8698748821953956183_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=dd5e9f&_nc_ohc=9Dt4cKSEzFIAX_Hk2Y-&_nc_ht=scontent.fsgn15-1.fna&oh=00_AfD3fq6Scf2nT0erTeMmm2IaDyo62mf0rPP4hHXpNHbJxQ&oe=6585022F",
-      trangThai: "Đang triển khai",
-      moTa: '<p>Bạn đang quan t&acirc;m đến lĩnh vực Testing &amp; QA v&agrave; muốn t&igrave;m hiểu về vai tr&ograve; quan trọng cũng như cơ hội nghề nghiệp trong ng&agrave;nh n&agrave;y? H&atilde;y tham gia Hội thảo "Testing &amp; QA - Vai tr&ograve;, cơ hội nghề nghiệp" do khoa C&ocirc;ng nghệ Th&ocirc;ng tin phối hợp c&ugrave;ng c&ocirc;ng ty DXC tổ chức nhằm mục đ&iacute;ch gi&uacute;p c&aacute;c bạn sinh vi&ecirc;n kh&aacute;m ph&aacute; thế giới của Testing &amp; QA v&agrave; nhận định về cơ hội việc l&agrave;m của lĩnh vực n&agrave;y trong tương lai.</p>\n<p>Testing &amp; QA (Testing and Quality Assurance) đ&oacute;ng vai tr&ograve; quan trọng trong qu&aacute; tr&igrave;nh ph&aacute;t triển phần mềm v&agrave; ứng dụng c&ocirc;ng nghệ. Với sự gia tăng về quy m&ocirc; v&agrave; phức tạp của c&aacute;c dự &aacute;n c&ocirc;ng nghệ, việc đảm bảo chất lượng v&agrave; độ tin cậy của sản phẩm l&agrave; điều cần thiết. Testing &amp; QA đảm bảo rằng c&aacute;c sản phẩm v&agrave; dịch vụ đ&aacute;p ứng được y&ecirc;u cầu của người d&ugrave;ng v&agrave; tu&acirc;n thủ c&aacute;c ti&ecirc;u chuẩn chất lượng.</p>',
-    },
-    {
-      maHoatDong: "VAITROQA112023",
-      tenLoaiHoatDong: "Hội nhập",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: 'HỘI THẢO: "VAI TRÒ, CƠ HỘI NGHỀ NGHIỆP"',
-      thoiGianBatDau: "12:30 21-10-2023",
-      thoiGianKetThuc: "16:30 21-10-2023",
-      diaChi: "E1 - 02.12, Thu Duc Campus",
-      soLuongSinhVien: 50,
-      soLuongDangKy: 3,
-      yeuCau: "",
-      hinh: "https://scontent.fsgn15-1.fna.fbcdn.net/v/t39.30808-6/402111590_648532580801951_2517260631823624238_n.jpg?stp=dst-jpg_p960x960&_nc_cat=101&ccb=1-7&_nc_sid=3635dc&_nc_ohc=aLEAxpaN2bAAX-7mUnT&_nc_ht=scontent.fsgn15-1.fna&oh=00_AfBLd6l0wYFH1EFp0szFeukvHCp7OD3UiYRzlk4SNN1Y-g&oe=6584FD6A",
-      trangThai: "Đang triển khai",
-      moTa: "",
-    },
-    {
-      maHoatDong: "VAITROQA122023",
-      tenLoaiHoatDong: "Hội thảo",
-      tenTaiKhoan: "Quang Vĩ",
-      tenTieuChi: "Học tập",
-      tenHoatDong: 'HỘI THẢO: "VAI TRÒ, CƠ HỘI NGHỀ NGHIỆP 12 2023"',
-      thoiGianBatDau: "22:24 25-12-2023",
-      thoiGianKetThuc: "22:24 26-12-2023",
-      diaChi: "E1 - 02.12, Thu Duc Campus",
-      soLuongSinhVien: 3,
-      soLuongDangKy: 3,
-      yeuCau: "",
-      hinh: "https://scontent.fsgn15-1.fna.fbcdn.net/v/t39.30808-6/410683296_661394679515741_8698748821953956183_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=dd5e9f&_nc_ohc=-d7iHMqjCooAX_HDtBk&_nc_ht=scontent.fsgn15-1.fna&oh=00_AfD1nDW6vhisztYU_Mu13f7ynhA3U0_XTxOO5x5SXGLTfQ&oe=658EE56F",
-      trangThai: "Đang triển khai",
-      moTa: "",
-    },
-  ];
+
+  useEffect(() => {
+    fetchData();
+    
+  }, [randomNumber]);
+
   return (
     <ScrollView>
       {data.map((item) => (
-        <CartCalendar key={item.maHoatDong} data={item} user={user} />
+        <CartCalendar key={item.maHoatDong} data={item} />
       ))}
+
     </ScrollView>
   );
 };

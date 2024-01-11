@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView } from "react-native";
+import { Alert, StyleSheet, Pressable } from 'react-native';
+
 import {
   Avatar,
   Title,
@@ -7,30 +9,43 @@ import {
   Text,
   TouchableRipple,
 } from "react-native-paper";
-
+import { Modal, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/Ionicons";
 import { getUserInfo } from '../service/auth-service';
+import { useNavigation } from '@react-navigation/core';
 
 const Profile = ({ route }) => {
-  const [user, setUser] = useState([]);
-  const jwt = route.params.jwt.accessToken;
-  //  console.log("🚀 ~ Profile ~ route:", user);
+  const [user, setUser] = useState({});
+  const jwt = route.params.jwt;
+  const navigation = useNavigation();
+  var randomNumber =route.params.load
+    // Math.floor(Math.random() * (max - min + 1)) + min;
+    // console.log(randomNumber)
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+ 
   const fetchUser = async () => {
     try {
       const res = await getUserInfo(jwt);
       setUser(res);
+    //  console.log('oke')
+      randomNumber=2
+      return res
     } catch (error) {
       console.error(error);
     }
   };
-
   useEffect(() => {
     fetchUser();
-    console.log(user)
-  }, []);
+    randomNumber=2
+  }, [randomNumber]);
+
 
   return (
+
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -41,7 +56,10 @@ const Profile = ({ route }) => {
             }}
             size={80}
           />
-          <Title style={styles.title}>{user.hoTen}</Title>
+          <View style={{ flexDirection: "column" }}>
+            <Title style={styles.title}>{user.hoTen}</Title>
+            <Title style={styles.caption}>{user.maSo}</Title>
+          </View>
         </View>
         <View style={styles.row}>
           <Icon name="map-marker-radius" color="#777777" size={20} />
@@ -50,7 +68,6 @@ const Profile = ({ route }) => {
           </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
             --
           </Text>)}
-
         </View>
         <View style={styles.row}>
           <Icon name="phone" color="#777777" size={20} />
@@ -59,7 +76,6 @@ const Profile = ({ route }) => {
           </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
             --
           </Text>)}
-
         </View>
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20} />
@@ -68,36 +84,64 @@ const Profile = ({ route }) => {
           </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
             --
           </Text>)}
-
         </View>
-        
+        <View style={styles.row}>
+          <Icon2 name="male-female" color="#777777" size={20} />
+          {user.gioiTinh !== null ? (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.gioiTinh}
+          </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            --
+          </Text>)}
+        </View>
+        <View style={styles.row}>
+          <Icon2 name="calendar-sharp" color="#777777" size={20} />
+          {user.ngaySinh !== null ? (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.ngaySinh}
+          </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            --
+          </Text>)}
+        </View>
       </View>
 
       <View style={styles.menuWrapper}>
+        {/* <TouchableRipple onPress={() => { toggleModal() }}>
+          <View style={styles.menuItem}>
+            <Icon2 name="settings" color="green" size={25} />
+            <Text style={styles.menuItemText}>Chỉnh sửa</Text>
+          </View>
+        </TouchableRipple> */}
         <TouchableRipple onPress={() => { }}>
           <View style={styles.menuItem}>
-            <Icon name="heart-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Your Favorites</Text>
+            <Icon2 name="checkbox-sharp" color="green" size={25} />
+            <Text style={styles.menuItemText}>Sự kiện đã tham gia</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => { }}>
+        <TouchableRipple onPress={() => {navigation.navigate("Login")}}>
           <View style={styles.menuItem}>
-            <Icon name="credit-card" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Payment</Text>
+            <Icon2 name="log-out" color="red" size={25} />
+            <Text style={styles.menuItemText}>Đăng xuất</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => { }}>
-          <View style={styles.menuItem}>
-            <Icon name="account-check-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Support</Text>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!isModalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Hello World!</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!isModalVisible)}>
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
           </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => { }}>
-          <View style={styles.menuItem}>
-            <Icon2 name="settings-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Settings</Text>
-          </View>
-        </TouchableRipple>
+        </Modal>
       </View>
     </SafeAreaView>
   );
@@ -117,10 +161,10 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     flexWrap: "wrap",
-    maxWidth: "80%",
+    maxWidth: "100%",
   },
   row: {
     flexDirection: "row",
@@ -133,8 +177,8 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     paddingVertical: 15,
-    paddingHorizontal: 20, // Reduce padding to fit within the screen
-    alignItems: "center", // Center items vertically
+    paddingHorizontal: 20,
+    alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#dddddd",
   },
@@ -143,5 +187,52 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontWeight: "600",
     fontSize: 16,
+  },
+  caption: {
+    fontSize: 15,
+    lineHeight: 15,
+    fontWeight: "500",
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginTop: 0,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 1,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });

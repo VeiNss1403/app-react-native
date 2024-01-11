@@ -1,14 +1,40 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, useWindowDimensions } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 import RenderHtml from 'react-native-render-html';
+import { deleteHuyDangKyHoatDong, postDangKyHoatDong } from "../service/hoat-dong-service";
 
-const Cart = ({ data }) => {
+const Cart = ({ data,jwt }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [dk, setDk] = useState(false);
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const source = { html: data.moTa };
+  
+  const handleDangKy=()=>{
+    
+    submitData()
+  }
+  const handleHuyDangKy=()=>{
+    
+    submitDelete()
+    
+  }
+  const submitDelete = async () => {
+    console.log('dk',data.maHoatDong,jwt)
+    await deleteHuyDangKyHoatDong(data.maHoatDong, jwt)
+    setDk(false)
+  }
+  const submitData = async () => {
+    console.log('dk',data.maHoatDong,jwt)
+    await postDangKyHoatDong(data.maHoatDong, jwt)
+    setDk(true)
+  }
+  useEffect(() => {
+    setDk(data.dangKy)
+    
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,12 +48,16 @@ const Cart = ({ data }) => {
 
         </View>
         <View style={styles.buttonContainer}>
-          {data.dangKy == true ? (
-            <TouchableOpacity style={styles.buttonRegister} >
-              <Text style={styles.buttonText}>Đã đăng ký</Text>
+          {dk === true ? (
+            <TouchableOpacity style={styles.buttonRegister} onPress={() =>
+              { handleHuyDangKy() }
+               } >
+              <Text style={styles.buttonText}>Hủy</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={styles.buttonRegister} onPress={""}>
+            <TouchableOpacity style={styles.buttonRegister} onPress={() =>
+              { handleDangKy() }
+               }>
               <Text style={styles.buttonText}>Đăng ký</Text>
             </TouchableOpacity>
           )}

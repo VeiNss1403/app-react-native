@@ -15,13 +15,13 @@ import Cart from "../components/Cart";
 import RenderHtml from 'react-native-render-html';
 import { getAllHoatDong } from "../service/hoat-dong-service";
 
-const user = {
+const userd = {
   userName: "Hutech - Khoa Công Nghệ Thông Tin",
   hinh: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9fuv3_FEi9_7_Ukr9SaQK1nvJhnzNbpazQg&usqp=CAU",
 };
 
 //    2080600830
-const Home = ({ route, navigation }) => {
+const Home = ({ route }) => {
   const jwt = route.params.jwt.jwt.accessToken;
   //console.log('home', jwt);
 
@@ -57,6 +57,7 @@ const Home = ({ route, navigation }) => {
         <Cart
           key={item.maHoatDong}
           data={item}
+          jwt={jwt}
        
         />
       ))}

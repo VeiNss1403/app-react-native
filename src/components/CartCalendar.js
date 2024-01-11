@@ -2,11 +2,11 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
-const CartCalendar = ({ data, user }) => {
+const CartCalendar = ({ data }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Detail", { item: data, user: user })}
+      onPress={() => navigation.navigate("Detail", { item: data })}
     >
       <View style={styles.container}>
         <View style={styles.containerRight}>
@@ -14,7 +14,7 @@ const CartCalendar = ({ data, user }) => {
             <Image
               style={styles.avatar}
               source={{
-                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9fuv3_FEi9_7_Ukr9SaQK1nvJhnzNbpazQg&usqp=CAU",
+                uri: data.hinh,
               }}
             />
           </View>
