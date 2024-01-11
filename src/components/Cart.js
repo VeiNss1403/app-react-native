@@ -5,6 +5,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 const Cart = ({ text, data, user }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigation = useNavigation();
+  const shouldRenderReadMoreButton = data.moTa.split("\n").length > 5;
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,15 +25,15 @@ const Cart = ({ text, data, user }) => {
         >
           {data.moTa}
         </Text>
-        {data.moTa !== "" ? (
+        {shouldRenderReadMoreButton && (
           <TouchableOpacity
             style={styles.readMoreButton}
             onPress={() => setIsExpanded(!isExpanded)}
           >
-            <Text style={styles.readMoreButtonText}>Xem thêm</Text>
+            <Text style={styles.readMoreButtonText}>
+              {isExpanded ? "Thu gọn" : "Xem thêm"}
+            </Text>
           </TouchableOpacity>
-        ) : (
-          ""
         )}
         <View style={styles.postImageContainer}>
           <Image

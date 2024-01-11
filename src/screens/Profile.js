@@ -13,7 +13,6 @@ import Icon2 from "@expo/vector-icons/Ionicons";
 
 const Profile = ({ route }) => {
   const user = route.params.user;
-  console.log("🚀 ~ Profile ~ route:", user);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -107,8 +106,8 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     paddingVertical: 15,
-    paddingHorizontal: 20, // Reduce padding to fit within the screen
-    alignItems: "center", // Center items vertically
+    paddingHorizontal: 20, 
+    alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#dddddd",
   },
