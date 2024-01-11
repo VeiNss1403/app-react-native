@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import {
   Avatar,
@@ -10,10 +10,26 @@ import {
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "@expo/vector-icons/Ionicons";
+import { getUserInfo } from '../service/auth-service';
 
 const Profile = ({ route }) => {
-  const user = route.params.user;
-  console.log("🚀 ~ Profile ~ route:", user);
+  const [user, setUser] = useState([]);
+  const jwt = route.params.jwt.accessToken;
+  //  console.log("🚀 ~ Profile ~ route:", user);
+  const fetchUser = async () => {
+    try {
+      const res = await getUserInfo(jwt);
+      setUser(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+    console.log(user)
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -25,48 +41,58 @@ const Profile = ({ route }) => {
             }}
             size={80}
           />
-          <Title style={styles.title}>{user.userName}</Title>
+          <Title style={styles.title}>{user.hoTen}</Title>
         </View>
         <View style={styles.row}>
           <Icon name="map-marker-radius" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>
-            Kolkata, India
-          </Text>
+          {user.diaChi !== null ? (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.diaChi}
+          </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            --
+          </Text>)}
+
         </View>
         <View style={styles.row}>
           <Icon name="phone" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>
-            +91-900000009
-          </Text>
+          {user.sdt !== null ? (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.sdt}
+          </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            --
+          </Text>)}
+
         </View>
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>
-            john_doe@email.com
-          </Text>
+          {user.email !== null ? (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            {user.email}
+          </Text>) : (<Text style={{ color: "#777777", marginLeft: 20 }}>
+            --
+          </Text>)}
+
         </View>
+        
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon name="heart-outline" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Your Favorites</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon name="credit-card" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Payment</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon name="account-check-outline" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Support</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple onPress={() => { }}>
           <View style={styles.menuItem}>
             <Icon2 name="settings-outline" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Settings</Text>

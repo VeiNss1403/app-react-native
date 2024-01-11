@@ -71,7 +71,7 @@ const BottomTabNavigator = ({ route }) => {
       <Tab.Screen
         name="Thông tin cá nhân"
         component={Profile}
-        initialParams={{ user: user }}
+        initialParams={{ jwt: item.jwt }}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="ios-person" color={color} size={26} />

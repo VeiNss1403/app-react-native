@@ -1,29 +1,68 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, useWindowDimensions } from "react-native";
+import Icon from "@expo/vector-icons/Ionicons";
+import RenderHtml from 'react-native-render-html';
 
-const Cart = ({ text, data, user }) => {
+const Cart = ({ data }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigation = useNavigation();
+  const { width } = useWindowDimensions();
+  const source = { html: data.moTa };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.wrapperAvatar}>
-          <Image style={styles.avatar} source={{ uri: user.hinh }} />
+          <Image style={styles.avatar} source={{ uri: data.hinhTaiKhoan }} />
         </View>
         <View style={styles.userInfo}>
           <Text style={styles.username} numberOfLines={1} ellipsizeMode="tail">
             {data.tenTaiKhoan}
           </Text>
+
+        </View>
+        <View style={styles.buttonContainer}>
+          {data.dangKy == true ? (
+            <TouchableOpacity style={styles.buttonRegister} >
+              <Text style={styles.buttonText}>Đã đăng ký</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.buttonRegister} onPress={""}>
+              <Text style={styles.buttonText}>Đăng ký</Text>
+            </TouchableOpacity>
+          )}
+
         </View>
       </View>
       <View>
-        <Text
-          style={styles.postText}
-          numberOfLines={isExpanded ? undefined : 5}
-        >
-          {data.moTa}
+        <Text style={styles.postText} onPress={() =>
+          navigation.navigate("Detail", { item: data })
+        }>
+          {data.tenHoatDong}
         </Text>
+
+        <View style={styles.itemText}>
+          <Icon name="location" size={18} style={{ paddingRight: 5 }} />
+          <Text style={styles.text}>: {data.diaChi}</Text>
+        </View>
+        <View style={styles.itemText}>
+          <Icon name="calendar-sharp" size={18} style={{ paddingRight: 5 }} />
+          <Text style={styles.text}>
+            : {data.thoiGianBatDau}
+          </Text>
+        </View>
+        
+
+          <RenderHtml
+            contentWidth={width}
+            source={source}
+            tagsStyles={tagsStyles}
+
+          /><Text style={styles.postText} numberOfLines={isExpanded ? undefined : 5}>
+        </Text>
+        {/* <Text style={styles.postText} numberOfLines={isExpanded ? undefined : 5} >
+          {data.moTa}
+        </Text> */}
         {data.moTa !== "" ? (
           <TouchableOpacity
             style={styles.readMoreButton}
@@ -42,7 +81,7 @@ const Cart = ({ text, data, user }) => {
             }}
           />
         </View>
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.buttonDetail}
             onPress={() =>
@@ -54,12 +93,18 @@ const Cart = ({ text, data, user }) => {
           <TouchableOpacity style={styles.buttonRegister} onPress={""}>
             <Text style={styles.buttonText}>Đăng ký</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );
 };
-
+const tagsStyles = {
+  p: {
+    fontSize: 16,
+    // Các thuộc tính CSS khác nếu cần
+  },
+  // Thêm các thẻ khác nếu cần
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -148,6 +193,14 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: "#fff",
+  },
+  itemText: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginHorizontal: 10,
+  },
+  text: {
+    fontSize: 16,
   },
 });
 
